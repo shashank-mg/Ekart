@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import React from 'react';
 import Toolbar from './components/Toolbar/Toolbar';
 import SideDrawer from './components/Sidedrawer/SideDrawer';
@@ -40,11 +41,9 @@ class App extends React.Component {
     let newNav;
 
     if(this.state.sideDrawerOpen)
-    {
-       // eslint-disable-next-line no-lone-blocks
-      {/* sideDrawer=<SideDrawer/> //since, the sideDrawerOpen is false initially,the SideDrawer wont be displayed,
-          i.e <SideDrawer /> component will not be displayed.*/}
-         backDrop=<Backdrop backdropHandler={this.backdropClickHandler}/>;
+    {       
+      {/* sideDrawer=<SideDrawer/> //since, the sideDrawerOpen is false initially,the SideDrawer wont be displayed,i.e <SideDrawer /> component will not be displayed.*/}
+      backDrop=<Backdrop backdropHandler={this.backdropClickHandler}/>;
     }
 
     if(this.state.signupLog){
@@ -80,12 +79,16 @@ class App extends React.Component {
 }
 export default App;
 
-/* As per the code Sidedrawer is always open yet invisible at the beginning when the site is opened  on the click
-of the button i.e the button on the toolbar the sideDrawerOpen becomes true  the animation function gets executed,
-in the SideDrawer.css, and the side drawer slides in when the backdrop is pressed the side drawer slides away since
-the sideDrawerOpen in closed. This means that side drawer is always present but hidden the process of sliding in and
-sliding out, as per the animation, and is controlled by the sideDrawerOpen condition. */
+/* 
+  As per the code Sidedrawer is always open yet invisible at the beginning when the site is opened  on the click
+  of the button i.e the button on the toolbar the sideDrawerOpen becomes true  the animation function gets executed,
+  in the SideDrawer.css, and the side drawer slides in when the backdrop is pressed the side drawer slides away since
+  the sideDrawerOpen in closed. This means that side drawer is always present but hidden the process of sliding in and
+  sliding out, as per the animation, and is controlled by the sideDrawerOpen condition. 
+*/
 
-/* Route path='' always takes to a new page, if not, using only event handlers takes to the default page i.email
+/* 
+  Route path='' always takes to a new page, if not, using only event handlers takes to the default page i.email
   path="/" with the contents of the page which is in the function controlled by events and along with that of the
-  path="/" page */
+  path="/" page 
+*/

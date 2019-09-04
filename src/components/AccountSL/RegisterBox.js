@@ -5,65 +5,78 @@ import './timerstyle.scss';
 const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
 const phoneRegex = RegExp(/^\d{3}\d{3}\d{4}$/);
 
-const formValid = formErrors => {
+const formValid = ({formErrors, ...rest}) => { // ...rest is the username , password, email, phonenumber
   let valid=true;
-
-  Object.values(formErrors).forEach(val => val.length > 0 && (valid=false));
-  return valid;
-};
+  // validates form errors beign empty.
+  Object.values(formErrors).forEach(val => {val.length > 0 && (valid=false)});
+  // validate the form was filled out.
+  Object.values(rest).forEach(val => {val === null && (valid = false);});
+  return valid;  
+}; 
 
 export default class RegisterBox extends React.Component{   
+  
   constructor(props){
     super(props);
     this.state={
       username:null,
       email:null,
       phonenum:null,
-      password:null,
+      password:null,      
+      //loggedin:false,
       formErrors:{
         username:"",
         email:"",
         phonenum:"",
         password:""
-      }
-    };
+      },      
+    };    
   } 
-    handleSubmit = e => {
-      e.preventDefault(); //Prevents the page from going to next page when the submit button is pressed.
-      
-      if(formValid(this.state.formErrors)){
-
-        
-      }
-    }
-
+  
+    // Control comes here after the submit value is pressed.
+    handleSubmit = e => {           
+      e.preventDefault(); // Prevents the page from going to next page when the submit button is pressed, before the page is validated.         
+      if(formValid(this.state)){
+          console.log(`
+            --Submitting--
+            UserName : ${this.state.username}
+            Email : ${this.state.email}
+            Phone Number: ${this.state.phonenum}
+            Password: ${this.state.password}
+          `);            
+      }else{
+            console.error("Form Invalid - Display Error Message");
+          }        
+      };
+    
+    // continously adds the value to formErrors array in set state as the input field is typed.
     handleChange = e => {
-      e.preventDefault();
+      e.preventDefault(); // Prevents the page from going to next page when the submit button is pressed, before the page is validated.
       const {name,value}=e.target;
       let formErrors = this.state.formErrors;
 
       switch(name){
         case 'username': 
             formErrors.username = 
-              value.length <3 && value.length >0 ? 
+              value.length <3  ? 
               "minimum 3 characters required": 
               "";
               break;
         case 'email':
             formErrors.email =
-              emailRegex.test(value) && value.length >0 ? 
+              emailRegex.test(value) ? 
               '': 
               "invalid email address";
               break;
         case 'phonenum': 
-            formErrors.username = 
-              phoneRegex.test(value) && value.length >0 ? 
+            formErrors.phonenum = 
+              phoneRegex.test(value) ? 
               "": 
               "invalid phone number";
               break;
         case 'password': 
-            formErrors.username = 
-              value.length <6 && value.length >0 ? 
+            formErrors.password = 
+              value.length <6 ? 
               "minimum 6 characters required": 
               "";
               break;
@@ -72,8 +85,9 @@ export default class RegisterBox extends React.Component{
       }
       this.setState({formErrors, [name]:value}, () => console.log(this.state));
     };
-
-    render(){
+    
+    
+    render(){           
       const {formErrors} = this.state;
       return(
         <div className="inner-container">
@@ -91,9 +105,7 @@ export default class RegisterBox extends React.Component{
                      noValidate
                      onChange={this.handleChange}
                />    
-               {formErrors.username.length>0 && (
-                 <span className='errorMessage'>{formErrors.username}</span>
-               )}          
+               {formErrors.username.length>0 && (<span className='errorMessage'>{formErrors.username}</span>)}          
             </div>
             <br/>    
 
@@ -105,7 +117,8 @@ export default class RegisterBox extends React.Component{
                      placeholder="email"
                      noValidate
                      onChange={this.handleChange}
-              />              
+              /> 
+              {formErrors.email.length>0 && (<span className='errorMessage'>{formErrors.email}</span>)}               
             </div>
             <br/>
 
@@ -118,6 +131,7 @@ export default class RegisterBox extends React.Component{
                      noValidate
                      onChange={this.handleChange}
               />
+              {formErrors.phonenum.length>0 && (<span className='errorMessage'>{formErrors.phonenum}</span>)}  
             </div>
             <br/>
 
@@ -130,11 +144,12 @@ export default class RegisterBox extends React.Component{
                      noValidate
                      onChange={this.handleChange}
               />
+              {formErrors.password.length>0 && (<span className='errorMessage'>{formErrors.password}</span>)}  
             </div>
             <br/>      
-            <button type="button" className="login-btn">Sign up</button>
+            <button type="submit" className="login-btn">Sign up</button>
             </form>         
-          </div>            
+          </div>                  
         </div>    
       )
     }

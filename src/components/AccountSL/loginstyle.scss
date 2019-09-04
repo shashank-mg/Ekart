@@ -87,6 +87,7 @@ $blue_theme: #70a1ff;
     flex-direction: column;
     margin-top: 5px;
     margin-bottom: 5px;
+    width:100%;
 }
 
 //Label
@@ -107,7 +108,8 @@ $blue_theme: #70a1ff;
     font-family: 'Trebuchet MS';
     font-size: 19px;
     color: #3e3e42;
-    background: rgba(15, 15, 15, 0.01);   
+    background: rgba(15, 15, 15, 0.01);  
+    width:100%; 
 }
 
 .login-input:hover {
