@@ -66,6 +66,11 @@ class App extends React.Component {
           <Route path="/details" component={Details}/>
           <Route path="/cart" component={Cart}/>
           <Route path="/signup" component={Account1}/>
+         {/* <Route path="/homeitems" component={}/>
+          <Route path="/fashionitems" component={}/>
+          <Route path="/electronicitems" component={}/>
+          <Route path="/stationaryitems" component={}/>
+          <Route path="/clothitems" component={}/> */}
           <Route exact path="/" component={ProductList}/>
           <Route component={Default}/>
         </Switch>
