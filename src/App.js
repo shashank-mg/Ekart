@@ -10,6 +10,7 @@ import Default from './components/Default';
 import Account1 from './components/AccountSL/Account1';
 import Newnav from './components/Toolbar/Newnav';
 import {Switch,Route} from 'react-router-dom';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
