@@ -9,3 +9,4 @@ import {BrowserRouter as Router} from 'react-router-dom';
 ReactDOM.render(<ProductProvider><Router><App /></Router></ProductProvider>, document.getElementById('root'));
 serviceWorker.unregister();
  
+//Context.js and react-router-dom are supposed to be added here.
