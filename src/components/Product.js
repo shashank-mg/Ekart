@@ -11,21 +11,29 @@ export default class Product extends Component {
         const {id,title,img,price,inCart}=this.props.product;
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
-                <div className="card"> {/* bootstrap class */}
-                    <div className="img-container p-5" onClick={console.log("Clicked")}>
-                        <Link to="/details">
-                            <img src={img} alt="product" className="card-img-top"></img>
-                        </Link>
-                        <button  className="btn btn-outline-default" disabled="disabled">                            
-                            <img  src="https://cdn0.iconfinder.com/data/icons/shopping-icons-5/100/Cart-512.png" width="20px" height="20px" alt="Add to Cart"/>
-                            Add to Cart
-                        </button>
-                       {/* <button style={{height:'20px',width:'20px'}} className="card-btn" disabled={inCart?true:false} onClick={()=>{console.log('added to the cart')}}>                            
-                            {inCart?(<p className="text-capitalize mb-0" disabled>{" "}is inCart</p>):(<i className="fas fa-cart-plus"/>)}
-                           </button>
-                       */}
-                    </div>
-                </div>            
+            
+                <div className="card"> {/* bootstrap class */}    
+                <ProductConsumer>     
+                {value => ( // Since its ContextAPI concept, we are not using props to call the function in other .js file, we use value here. 
+                    <div className="img-container p-5" onClick={()=>value.handleDetail(id)}>
+                    
+                    <Link to="/details">
+                        <img src={img} alt="product" className="card-img-top"></img>
+                    </Link>
+                    <button  className="btn btn-outline-default" disabled="disabled">                            
+                        <img  src="https://cdn0.iconfinder.com/data/icons/shopping-icons-5/100/Cart-512.png" width="20px" height="20px" alt="Add to Cart"/>
+                        Add to Cart
+                    </button>
+                    
+                    {/* 
+                      <button style={{height:'20px',width:'20px'}} className="cart-btn" disabled={inCart?true:false} onClick={()=>{console.log('added to the cart')}}>                            
+                      {inCart?(<p className="text-capitalize mb-0" disabled>{" "} inCart</p>):(<img  src="https://cdn0.iconfinder.com/data/icons/shopping-icons-5/100/Cart-512.png" width="20px" height="20px" alt="Add to Cart"/>)}                          
+                      </button>
+                    */}                       
+                </div>
+                )}
+                </ProductConsumer>
+                </div>     
                 {/* Card footer */}
                 <div className="card-footer d-flex justify-content-between">
                 <p className="align-self-center mb-0" style={{fontFamily:'Trebuchet MS'}}>{title}</p>
