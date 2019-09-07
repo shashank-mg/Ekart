@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import {storeProducts,detailProduct} from './Data';
+import React, { Component } from 'react';
+import {storeProducts,detailProduct,homeItems,fashionItems} from './Data';
 
 const ProductContext = React.createContext(); 
 
@@ -14,32 +14,75 @@ class ProductProvider extends Component {
            This problem has to be solved. 
         */
         products:[], // This is to solve the problem which was seen in tester.
+        homeProducts:[],
+        fashionProducts:[],
         detailProduct:detailProduct
     }
     componentDidMount(){
         this.setProducts();
+        this.setHomeProducts();
+        this.setFashionProducts();
     }
     addToCart = (id) =>{ // To add the item to the cart
         console.log(`hello from addToCart ${id}`);
     }
 
+    // FRONT PAGE
     setProducts=()=>{ // This is to solve the problem which was seen in tester.
-        let tempProducts=[];
+        let tempProducts=[];                
         storeProducts.forEach(item=>{
-            const singleItem = {...item}; // copying each value from storeProducts taking it to 'item' and put it to the singleItem.
-            tempProducts=[...tempProducts,singleItem]; /* tempProducts=[...tempProducts(1),singleItem(2)];,(1)--> grab empty value from the tempProducts array,(2)--> add the values to the empty array from the 'singleItem' */
+            const singleItem = {...item};                    // copying each value from storeProducts taking it to 'item' and put it to the singleItem.
+            tempProducts=[...tempProducts,singleItem];      /* tempProducts=[...tempProducts(1),singleItem(2)];,(1)--> grab empty value from the tempProducts array,(2)--> add the values to the empty array from the 'singleItem' */
         })
         this.setState(()=>{
             return {products:tempProducts}
         })
+    } 
+    // HOME ITEMS
+    setHomeProducts=()=>{
+        let temphomeProducts=[];        
+        homeItems.forEach(items=>{
+            const singleitems1 = {...items};
+            temphomeProducts=[...temphomeProducts,singleitems1];
+        })
+        this.setState(()=>{
+            return {homeProducts:temphomeProducts}
+        })
+    }
+    // FASHION PRODUCTS
+    setFashionProducts=()=>{
+        let tempfashionProducts=[];
+        fashionItems.forEach(item=>{
+            const singleItem ={...item};
+            tempfashionProducts=[...tempfashionProducts,singleItem];
+        })
+        this.setState(()=>{
+            return {fashionProducts:tempfashionProducts}
+        })
     }
     getItem = id =>{
-        const product = this.state.products.find(item=> item.id ===id);
-        return product;
+        const product = this.state.products.find(item=> item.id === id);  //const homeproduct= this.state.homeProducts.find(item=> item.id === id);       
+        return (product);
+    }
+    getHomeItem = id =>{
+        const homeproduct= this.state.homeProducts.find(item=> item.id === id);
+        return(homeproduct);
+    }
+    getFashionItem = id =>{
+        const fashionproduct= this.state.fashionProducts.find(item=> item.id === id);
+        return(fashionproduct);
     }
     handleDetail = (id) =>{
-        let product = this.getItem(id);
-        this.setState(()=>{return{detailProduct:product}}) // overridding
+        let product = this.getItem(id);        
+        this.setState(()=>{return{detailProduct:product}}) // overridding        
+    }
+    handleHomeDetail=id=>{
+        let homeprod = this.getHomeItem(id);
+        this.setState(()=>{return{detailProduct:homeprod}}) 
+    }
+    handleFashionDetail=id=>{
+        let fashionprod = this.getFashionItem(id);
+        this.setState(()=>{return{detailProduct:fashionprod}}) 
     }
 
    // This is to test if the value in products changes the value in the Data.js aslo changes.This problem can be solved by destructuring.
@@ -61,7 +104,7 @@ class ProductProvider extends Component {
     render() {
         return (
            // Provider is returned 
-            <ProductContext.Provider value={{...this.state,handleDetail:this.handleDetail,addToCart:this.addToCart}}>
+            <ProductContext.Provider value={{...this.state,handleDetail:this.handleDetail,addToCart:this.addToCart,handleHomeDetail:this.handleHomeDetail,handleFashionDetail:this.handleFashionDetail}}>
                 {this.props.children}    {/* returning all the children (within this component) in our application */}
             </ProductContext.Provider>
         )

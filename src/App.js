@@ -9,6 +9,8 @@ import Cart from './components/Cart';
 import Default from './components/Default';
 import Account1 from './components/AccountSL/Account1';
 import Newnav from './components/Toolbar/Newnav';
+import HomeProductList from './components/AllProducts/HomeProductList';
+import FashionProductList from './components/AllProducts/FashionProductList';
 import {Switch,Route} from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -67,9 +69,9 @@ class App extends React.Component {
           <Route path="/details" component={Details}/>
           <Route path="/cart" component={Cart}/>
           <Route path="/signup" component={Account1}/>
-         {/* <Route path="/homeitems" component={}/>
-          <Route path="/fashionitems" component={}/>
-          <Route path="/electronicitems" component={}/>
+          <Route path="/homeitems" component={HomeProductList}/>
+          <Route path="/fashionitems" component={FashionProductList}/>
+          {/*<Route path="/electronicitems" component={}/>
           <Route path="/stationaryitems" component={}/>
           <Route path="/clothitems" component={}/> */}
           <Route exact path="/" component={ProductList}/>

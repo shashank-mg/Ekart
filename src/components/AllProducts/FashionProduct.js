@@ -1,20 +1,19 @@
-//Indivisual Products
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {ProductConsumer} from './Context';
-import PropTypes from 'prop-types'; //To prevent data from being modified
+import {ProductConsumer} from '../Context';
+import PropTypes from 'prop-types';
 
-export default class Product extends Component {
+export default class FashionProduct extends Component {
     render() {
-        const {id,title,img,price,inCart}=this.props.product;
+        const {id,title,img,price} = this.props.product;
         return (
-            <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">    
-                <div className="card"> {/* bootstrap class */}    
+            <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">            
+                <div className="card">    
                 <ProductConsumer>     
-                {value => ( // Since its ContextAPI concept, we are not using props to call the function in other .js file, we use value here. 
-                    <div className="img-container p-5" onClick={()=>value.handleDetail(id)}>
+                {value => ( 
+                    <div className="img-container p-5" onClick={()=>value.handleFashionDetail(id)}>
                     
                     <Link to="/details">
                         <img src={img} alt="product" className="card-img-top"></img>
@@ -28,7 +27,8 @@ export default class Product extends Component {
                       <button style={{height:'20px',width:'20px'}} className="cart-btn" disabled={inCart?true:false} onClick={()=>{console.log('added to the cart')}}>                            
                       {inCart?(<p className="text-capitalize mb-0" disabled>{" "} inCart</p>):(<img  src="https://cdn0.iconfinder.com/data/icons/shopping-icons-5/100/Cart-512.png" width="20px" height="20px" alt="Add to Cart"/>)}                          
                       </button>
-                    */}                       
+                    */}  
+
                 </div>
                 )}
                 </ProductConsumer>
@@ -43,9 +43,9 @@ export default class Product extends Component {
     }
 }
 
-//Dont touch.
-Product.propTypes = {
-    product:PropTypes.shape({
+
+FashionProduct.propTypes = {
+        product:PropTypes.shape({
         id:PropTypes.number,
         img:PropTypes.string,
         title:PropTypes.string,
@@ -94,9 +94,4 @@ const ProductWrapper = styled.div`
            &:hover{
                transform:scale(1.05);
            }
-
 `;
-
-// transition-- something happens after a specified time interval, 'all' means transition property should be applicalble to all properties. and is of the type 'linear'.
-// overflow is used if the image is bigger and the extra contents are to be hidden
-// transform is used for animation , scale is used here to increase the size of the image when hovered.

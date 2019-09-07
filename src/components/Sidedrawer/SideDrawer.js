@@ -25,8 +25,12 @@ const SideDrawer = props =>{
                 /></h2></Link>     
 
             <ul className="list-group">
-                <li className="list-group-item">Home</li>  
+            <Link to="/homeitems">
+                <li className="list-group-item">Home</li> 
+            </Link>
+            <Link to="/fashionitems">    
                 <li className="list-group-item">Fashion</li>
+            </Link>
                 <li className="list-group-item">Electronics</li>
                 <li className="list-group-item">Stationary</li>
                 <li className="list-group-item">Clothes</li>

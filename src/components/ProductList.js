@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import Title from './Title';
 import Product from './Product';
-//import {storeProducts} from './Data'; --> importing array called storeProducts from Data.js
+//import {storeProducts} from './Data'; --> importing array called storeProducts from Data.js, did this before doing Context.js
 import {ProductConsumer} from './Context';
 export default class ProductList extends Component {
     /* example import used before Context.js */
@@ -27,16 +27,10 @@ export default class ProductList extends Component {
                             {/* here 'products' is the product from the provider */}
                             return value.products.map(product=>{
                                 return <Product key={product.id} product={product}/>                                
-                            {/* 
-                                That means for each & every items in the productList i.e storeProducts array from Context.js we return the data 
-                                from product 
-                            */}
+                            {/*That means for each & every items in the productList i.e storeProducts array from Context.js we return the data from product */}
                             }) 
                         }}
-                        {/* 
-                            We must always use a function to get data from Context here (hello is the parameter thasssst we recieve from 
-                            Context and {hello} is the 'value' attribute in the Context)
-                        */}
+                        {/* We must always use a function to get data from Context here (hello is the parameter thasssst we recieve from Context and {hello} is the 'value' attribute in the Context)*/}
                     </ProductConsumer>
                     </div>
                  </div>

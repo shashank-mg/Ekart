@@ -27,7 +27,7 @@ export default class Details extends Component {
                                 </div>                                
                                 {/* Product text */}
                                 <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
-                                    <h2>model: {title}</h2>
+                                    <h2> {title}</h2>
                                     <h4 className="text-title text-uppercase text-muted mt-3 mb-3">
                                         made by: <span className="text-uppercase">{company}</span> 
                                     </h4>                                    
@@ -40,10 +40,7 @@ export default class Details extends Component {
                                             {info}
                                         </p>
                                         <div>
-                                            {/* Buttons */}
-                                            <Link to="/">
-                                                <button className="btn btn-outline-primary">Go Back to Products</button>
-                                            </Link>
+                                            {/* Buttons */}                                            
                                                 <button className="btn btn-outline-warning ml-2"> Add To Cart</button> 
                                             {/*
                                             <button disabled={inCart?true:false} 
