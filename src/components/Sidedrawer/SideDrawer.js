@@ -25,15 +25,21 @@ const SideDrawer = props =>{
                 /></h2></Link>     
 
             <ul className="list-group">
-            <Link to="/homeitems">
-                <li className="list-group-item">Home</li> 
+            <Link to="/homeitems" onClick={props.goBack}>
+                <li className="list-group-item" >Home</li> 
             </Link>
-            <Link to="/fashionitems">    
+            <Link to="/fashionitems" onClick={props.goBack}>    
                 <li className="list-group-item">Fashion</li>
             </Link>
+            <Link to="/electronicitems" onClick={props.goBack}>    
                 <li className="list-group-item">Electronics</li>
+            </Link>
+            <Link to="/stationaryitems" onClick={props.goBack}>  
                 <li className="list-group-item">Stationary</li>
+            </Link>
+            <Link to="/clothitems" onClick={props.goBack}>  
                 <li className="list-group-item">Clothes</li>
+            </Link>
             </ul>
         </nav>
     );

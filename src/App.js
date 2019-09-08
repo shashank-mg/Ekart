@@ -11,6 +11,9 @@ import Account1 from './components/AccountSL/Account1';
 import Newnav from './components/Toolbar/Newnav';
 import HomeProductList from './components/AllProducts/HomeProductList';
 import FashionProductList from './components/AllProducts/FashionProductList';
+import ElectronicProductList from './components/AllProducts/ElectronicProductList';
+import StationaryProductList from './components/AllProducts/StationaryProductList';
+import ClothesProductList from './components/AllProducts/ClothesProductList';
 import {Switch,Route} from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -42,11 +45,12 @@ class App extends React.Component {
     //let openup;
     let backDrop;
     let newNav;
+    
 
     if(this.state.sideDrawerOpen)
     {       
       {/* sideDrawer=<SideDrawer/> //since, the sideDrawerOpen is false initially,the SideDrawer wont be displayed,i.e <SideDrawer /> component will not be displayed.*/}
-      backDrop=<Backdrop backdropHandler={this.backdropClickHandler}/>;
+      backDrop=<Backdrop backdropHandler={this.backdropClickHandler}/>;      
     }
 
     if(this.state.signupLog){
@@ -62,18 +66,18 @@ class App extends React.Component {
       </div>
       <div style={{height:'100%'}}>
         <Toolbar drawerClickHandler={this.drawerToggleClickHandler} signLog={this.signUpLogOpener}/>
-        <SideDrawer shows={this.state.sideDrawerOpen}/>
+        <SideDrawer shows={this.state.sideDrawerOpen} goBack={this.backdropClickHandler}/>
         {/* To Add some animations these changes were made, in line 24 and 30, i.e adding 'shows' */}
-        {backDrop}
+        {backDrop}        
         <Switch>    { /* Specifies where the page has to go when the following path is typed */ }
           <Route path="/details" component={Details}/>
           <Route path="/cart" component={Cart}/>
           <Route path="/signup" component={Account1}/>
           <Route path="/homeitems" component={HomeProductList}/>
           <Route path="/fashionitems" component={FashionProductList}/>
-          {/*<Route path="/electronicitems" component={}/>
-          <Route path="/stationaryitems" component={}/>
-          <Route path="/clothitems" component={}/> */}
+          <Route path="/electronicitems" component={ElectronicProductList}/>
+          <Route path="/stationaryitems" component={StationaryProductList}/>
+          <Route path="/clothitems" component={ClothesProductList}/> 
           <Route exact path="/" component={ProductList}/>
           <Route component={Default}/>
         </Switch>

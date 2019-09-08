@@ -1,5 +1,3 @@
-/* eslint-disable no-unreachable */
-/* eslint-disable no-lone-blocks */
 import React, { Component } from 'react';
 import {ProductConsumer} from '../Context';
 import HomeProduct from './HomeProduct';
