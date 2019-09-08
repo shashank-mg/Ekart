@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {storeProducts,detailProduct,homeItems,fashionItems,electronicItems,stationaryItems,clotheItems} from './Data';
 
 const ProductContext = React.createContext(); 
+//Consumer
+const ProductConsumer = ProductContext.Consumer;
 
 //Place the ProductContext.Provider on top of the entire application.i.e in index.js
 //Do the same thing as done in ProductList i.e getting data from the Data.js and put it in an array.
@@ -178,17 +180,14 @@ class ProductProvider extends Component {
                                               handleElectronicDetail:this.handleElectronicDetail,
                                               handleStationaryDetail:this.handleStationaryDetail,
                                               handleClothesDetail:this.handleClothesDetail
-            }}>
+                                            }}>
                 {this.props.children}    {/* returning all the children (within this component) in our application */}
             </ProductContext.Provider>
         )
     }
 }
 
-//Consumer
- const ProductConsumer = ProductContext.Consumer;
-
- export {ProductProvider,ProductConsumer};
+export {ProductProvider,ProductConsumer};
 
 /* 
    Difference of syntax between assigning and copying.   
