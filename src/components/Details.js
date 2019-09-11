@@ -40,9 +40,9 @@ export default class Details extends Component {
                                             {info}
                                         </p>
                                         <div>
-                                            {/* Buttons */}                                            
+                                            {/* Buttons                                            
                                                 <button className="btn btn-outline-warning ml-2"> Add To Cart</button> 
-                                            {/*
+                                            */} 
                                             <button disabled={inCart?true:false} 
                                             className="btn btn-outline-warning ml-2" 
                                             onClick={()=>{
@@ -50,7 +50,7 @@ export default class Details extends Component {
                                             }}>
                                                 {inCart?"In Cart":"Add to Cart"}
                                             </button>
-                                            */}
+                                            
                                         </div>
                                     </p>
                                 </div>

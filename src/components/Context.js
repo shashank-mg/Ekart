@@ -21,9 +21,11 @@ class ProductProvider extends Component {
         electronicProducts:[],
         stationaryProducts:[],
         clothesProducts:[],
-        detailProduct:detailProduct
+        detailProduct:detailProduct,
+        cart:[]
     }
-    componentDidMount(){
+    componentDidMount()
+    {
         this.setProducts();
         this.setHomeProducts();
         this.setFashionProducts();
@@ -32,15 +34,23 @@ class ProductProvider extends Component {
         this.setClothesProducts();
     }
     addToCart = (id) =>{ // To add the item to the cart
-        console.log(`hello from addToCart ${id}`);
+        //console.log(`hello from addToCart ${id}`);
+        let tempcartproducts=[...this.state.products]; // accessing all 'products' in state.
+        const index = tempcartproducts.indexOf(this.getItem(id));
+        const product = tempcartproducts[index]; // specific item with index.
+        product.inCart=true; // changing properties.
+        product.count=1;
+        const price = product.price;
+        product.total=price;    
+        this.setState(()=>{return{products:tempcartproducts,cart:[...this.state.cart],product};},()=>{console.log(this.state)});
     }
 
     // FRONT PAGE
     setProducts=()=>{ // This is to solve the problem which was seen in tester.
         let tempProducts=[];                
         storeProducts.forEach(item=>{
-            const singleItem = {...item};                    // copying each value from storeProducts taking it to 'item' and put it to the singleItem.
-            tempProducts=[...tempProducts,singleItem];      /* tempProducts=[...tempProducts(1),singleItem(2)];,(1)--> grab empty value from the tempProducts array,(2)--> add the values to the empty array from the 'singleItem' */
+            const singleItem = {...item};   // copying each value from storeProducts taking it to 'item' and put it to the singleItem.
+            tempProducts=[...tempProducts,singleItem];  /* tempProducts=[...tempProducts(1),singleItem(2)];,(1)--> grab empty value from the tempProducts array,(2)--> add the values to the empty array from the 'singleItem' */
         })
         this.setState(()=>{
             return {products:tempProducts}
