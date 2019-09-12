@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {storeProducts,detailProduct,homeItems,fashionItems,electronicItems,stationaryItems,clotheItems} from './Data';
+import {storeProducts,detailProduct,homeItems,fashionItems,electronicItems,stationaryItems,
+    clotheItems,detailProduct1,detailProduct2,detailProduct3,detailProduct4,detailProduct5} from './Data';
+
 
 const ProductContext = React.createContext(); 
 //Consumer
@@ -22,6 +24,11 @@ class ProductProvider extends Component {
         stationaryProducts:[],
         clothesProducts:[],
         detailProduct:detailProduct,
+        detailProduct1:detailProduct1,
+        detailProduct2:detailProduct2,
+        detailProduct3:detailProduct3,
+        detailProduct4:detailProduct4,
+        detailProduct5:detailProduct5,
         cart:[]
     }
     componentDidMount()
@@ -44,6 +51,63 @@ class ProductProvider extends Component {
         product.total=price;    
         this.setState(()=>{return{products:tempcartproducts,cart:[...this.state.cart],product};},()=>{console.log(this.state)});
     }
+
+        // Adding Home itmes to cart
+        addHomeToCart = (id) =>{
+            let tempcarthomeproducts=[...this.state.homeProducts];
+            const index1 =  tempcarthomeproducts.indexOf(this.getHomeItem(id));
+            const product1 = tempcarthomeproducts[index1];
+            product1.inCart=true; // changing properties.
+            product1.count=1
+            const price1 = product1.price;
+            product1.total=price1;    
+            this.setState(()=>{return{homeProducts:tempcarthomeproducts,cart:[...this.state.cart],product1};},()=>{console.log(this.state)});
+        }
+        //adding fashion items to cart
+        addFashionToCart = id =>{
+            let tempcartfashionproducts=[...this.state.fashionProducts];
+            const index2 =  tempcartfashionproducts.indexOf(this.getFashionItem(id));
+            const product2 = tempcartfashionproducts[index2];
+            product2.inCart=true; // changing properties.
+            product2.count=1
+            const price2 = product2.price;
+            product2.total=price2;    
+            this.setState(()=>{return{fashionProducts:tempcartfashionproducts,cart:[...this.state.cart],product2};},()=>{console.log(this.state)});
+        }
+        //Adding Electronic items to cart
+        addElectronicToCart = id =>{
+            let tempcartelectronicproducts=[...this.state.electronicProducts];
+            const index3 =  tempcartelectronicproducts.indexOf(this.getElectronicItem(id));
+            const product3 = tempcartelectronicproducts[index3];
+            product3.inCart=true; // changing properties.
+            product3.count=1
+            const price3 = product3.price;
+            product3.total=price3;    
+            this.setState(()=>{return{electronicProducts:tempcartelectronicproducts,cart:[...this.state.cart],product3};},()=>{console.log(this.state)});
+        }
+        //Adding fashion items to cart
+        addStationaryToCart=id=>{
+            let tempcartstationaryproducts=[...this.state.stationaryProducts];
+            const index4 =  tempcartstationaryproducts.indexOf(this.getStationaryItem(id));
+            const product4 = tempcartstationaryproducts[index4];
+            product4.inCart=true; // changing properties.
+            product4.count=1
+            const price4 = product4.price;
+            product4.total=price4;    
+            this.setState(()=>{return{stationaryProducts:tempcartstationaryproducts,cart:[...this.state.cart],product4};},()=>{console.log(this.state)});
+        }
+        //Adding clothes items to cart
+        addClothesToCart=id=>{
+            let tempcartclothesproduct=[...this.state.clothesProducts];
+            const index5 =  tempcartclothesproduct.indexOf(this.getClothesItem(id));
+            const product5 = tempcartclothesproduct[index5];
+            product5.inCart=true; // changing properties.
+            product5.count=1
+            const price5 = product5.price;
+            product5.total=price5;    
+            this.setState(()=>{return{clothesProducts:tempcartclothesproduct,cart:[...this.state.cart],product5};},()=>{console.log(this.state)});
+        }
+
 
     // FRONT PAGE
     setProducts=()=>{ // This is to solve the problem which was seen in tester.
@@ -144,23 +208,23 @@ class ProductProvider extends Component {
     }
     handleHomeDetail=id=>{
         let homeprod = this.getHomeItem(id);
-        this.setState(()=>{return{detailProduct:homeprod}}) 
+        this.setState(()=>{return{detailProduct1:homeprod}}) 
     }
     handleFashionDetail=id=>{
         let fashionprod = this.getFashionItem(id);
-        this.setState(()=>{return{detailProduct:fashionprod}}) 
+        this.setState(()=>{return{detailProduct2:fashionprod}}) 
     }
     handleElectronicDetail=id=>{
         let electronicprod = this.getElectronicItem(id);
-        this.setState(()=>{return{detailProduct:electronicprod}})
+        this.setState(()=>{return{detailProduct3:electronicprod}})
     }
     handleStationaryDetail=id=>{
         let stationaryprod=this.getStationaryItem(id);
-        this.setState(()=>{return{detailProduct:stationaryprod}})
+        this.setState(()=>{return{detailProduct4:stationaryprod}})
     }
     handleClothesDetail=id=>{
         let clothesprod=this.getClothesItem(id);
-        this.setState(()=>{return{detailProduct:clothesprod}})
+        this.setState(()=>{return{detailProduct5:clothesprod}})
     }
 
    // This is to test if the value in products changes the value in the Data.js aslo changes.This problem can be solved by destructuring.
@@ -182,15 +246,23 @@ class ProductProvider extends Component {
     render() {
         return (
            // Provider is returned 
-            <ProductContext.Provider value={{...this.state,
-                                              handleDetail:this.handleDetail,
-                                              addToCart:this.addToCart,
-                                              handleHomeDetail:this.handleHomeDetail,
-                                              handleFashionDetail:this.handleFashionDetail,
-                                              handleElectronicDetail:this.handleElectronicDetail,
-                                              handleStationaryDetail:this.handleStationaryDetail,
-                                              handleClothesDetail:this.handleClothesDetail
-                                            }}>
+            <ProductContext.Provider value={{
+                ...this.state,
+                handleDetail:this.handleDetail,
+                addToCart:this.addToCart,
+                addHomeToCart:this.addHomeToCart,
+                addFashionToCart:this.addFashionToCart,
+                addElectronicToCart:this.addElectronicToCart,
+                addStationaryToCart:this.addStationaryToCart,
+                addClothesToCart:this.addClothesToCart,
+                openModal:this.openModal,
+                closeModal:this.closeModal,
+                handleHomeDetail:this.handleHomeDetail,
+                handleFashionDetail:this.handleFashionDetail,
+                handleElectronicDetail:this.handleElectronicDetail,
+                handleStationaryDetail:this.handleStationaryDetail,
+                handleClothesDetail:this.handleClothesDetail,
+            }}>
                 {this.props.children}    {/* returning all the children (within this component) in our application */}
             </ProductContext.Provider>
         )

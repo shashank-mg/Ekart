@@ -5,6 +5,11 @@ import SideDrawer from './components/Sidedrawer/SideDrawer';
 import Backdrop from './components/Backdrop/Backdrop';
 import ProductList from './components/ProductList';
 import Details from './components/Details';
+import Details1 from './components/Details1';
+import Details2 from './components/Details2';
+import Details3 from './components/Details3';
+import Details4 from './components/Details4';
+import Details5 from './components/Details5';
 import Cart from './components/Cart';
 import Default from './components/Default';
 import Account1 from './components/AccountSL/Account1';
@@ -71,6 +76,11 @@ class App extends React.Component {
         {backDrop}        
         <Switch>    { /* Specifies where the page has to go when the following path is typed */ }
           <Route path="/details" component={Details}/>
+          <Route path="/details1" component={Details1}/>
+          <Route path="/details2" component={Details2}/>
+          <Route path="/details3" component={Details3}/>
+          <Route path="/details4" component={Details4}/>
+          <Route path="/details5" component={Details5}/>
           <Route path="/cart" component={Cart}/>
           <Route path="/signup" component={Account1}/>
           <Route path="/homeitems" component={HomeProductList}/>

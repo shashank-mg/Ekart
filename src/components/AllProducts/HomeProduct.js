@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 export default class HomeProduct extends Component {
     render() {
-        const {id,title,img,price} = this.props.product;
+        const {id,title,img,price,inCart} = this.props.product;
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">            
                 <div className="card">    
@@ -15,19 +15,18 @@ export default class HomeProduct extends Component {
                 {value => ( 
                     <div className="img-container p-5" onClick={()=>value.handleHomeDetail(id)}>
                     
-                    <Link to="/details">
+                    <Link to="/details1">
                         <img src={img} alt="product" className="card-img-top"></img>
-                    </Link>
-                    <button  className="btn btn-outline-default" disabled="disabled">                            
+                    </Link>    
+                    {/* 
+                      <button  className="btn btn-outline-default" disabled="disabled">                            
                         <img  src="https://cdn0.iconfinder.com/data/icons/shopping-icons-5/100/Cart-512.png" width="20px" height="20px" alt="Add to Cart"/>
                         Add to Cart
                     </button>
-                    
-                    {/* 
-                      <button style={{height:'20px',width:'20px'}} className="cart-btn" disabled={inCart?true:false} onClick={()=>{console.log('added to the cart')}}>                            
-                      {inCart?(<p className="text-capitalize mb-0" disabled>{" "} inCart</p>):(<img  src="https://cdn0.iconfinder.com/data/icons/shopping-icons-5/100/Cart-512.png" width="20px" height="20px" alt="Add to Cart"/>)}                          
-                      </button>
                     */}  
+                    <button className="btn btn-outline-default" disabled={inCart?true:false} onClick={()=>{value.addHomeToCart(id)}}>                            
+                      {inCart?(<img  src="https://cdn1.iconfinder.com/data/icons/shopping-e-commerce/24/Cash-Register-512.png" width="20px" height="20px" alt="Added to Cart"/>):(<img  src="https://cdn0.iconfinder.com/data/icons/shopping-icons-5/100/Cart-512.png" width="20px" height="20px" alt="Add to Cart"/>)}                          
+                      </button>
 
                 </div>
                 )}
