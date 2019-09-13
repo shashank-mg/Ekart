@@ -256,10 +256,30 @@ class ProductProvider extends Component {
    }
    removeItem = id=>{
        console.log("item removed");
-   }
+       let tempProducts=[...this.state.products];
+       let tempCart = [...this.state.cart];
+       tempCart = tempCart.filter(item=> item.id !== id); //removes all the item except the item that matches the given id.(returns the all the item to the cart that doesnt match this id)
+       const index = tempProducts.indexOf(this.getItem(id)); // gets the index of the product in the tempProducts array.
+       let removedProduct = tempProducts[index]; //gets the product that is to be removed
+       removedProduct.inCart=false;
+       removedProduct.count=0;
+       removedProduct.total=0;
+       this.setState(()=>{
+           return{
+               cart:[...tempCart],
+               product:[...tempProducts] // to set the values back to default
+           };
+        },()=>{this.addTotals();}
+       )
+    }
    clearCart=()=>{
        console.log("Cart is clear");
-       this.setState(()=>{return{cart:[]}})
+       this.setState(()=>{return{cart:[]}},
+       ()=>{
+           this.setProducts(); // everything set backs to default i.e in data
+           this.addTotals();// totals set to default
+        }
+    )
    }
    addTotals=()=>{
        let subTotal = 0;
