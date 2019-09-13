@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {storeProducts,detailProduct,homeItems,fashionItems,electronicItems,stationaryItems,
-    clotheItems,detailProduct1,detailProduct2,detailProduct3,detailProduct4,detailProduct5} from './Data';
+        clotheItems,detailProduct1,detailProduct2,detailProduct3,detailProduct4,detailProduct5} from './Data';
 
 
 const ProductContext = React.createContext(); 
@@ -29,7 +29,10 @@ class ProductProvider extends Component {
         detailProduct3:detailProduct3,
         detailProduct4:detailProduct4,
         detailProduct5:detailProduct5,
-        cart:[]
+        cart:[],
+        cartSubTotal:0,
+        cartTax:0,
+        cartTotal:0
     }
     componentDidMount()
     {
@@ -49,7 +52,7 @@ class ProductProvider extends Component {
         product.count=1;
         const price = product.price;
         product.total=price;    
-        this.setState(()=>{return{products:tempcartproducts,cart:[...this.state.cart],product};},()=>{console.log(this.state)});
+        this.setState(()=>{return{products:tempcartproducts,cart:[...this.state.cart,product]};},()=>{this.addTotals()});
     }
 
         // Adding Home itmes to cart
@@ -61,7 +64,7 @@ class ProductProvider extends Component {
             product1.count=1
             const price1 = product1.price;
             product1.total=price1;    
-            this.setState(()=>{return{homeProducts:tempcarthomeproducts,cart:[...this.state.cart],product1};},()=>{console.log(this.state)});
+            this.setState(()=>{return{homeProducts:tempcarthomeproducts,cart:[...this.state.cart,product1]};},()=>{console.log(this.state)});
         }
         //adding fashion items to cart
         addFashionToCart = id =>{
@@ -72,7 +75,7 @@ class ProductProvider extends Component {
             product2.count=1
             const price2 = product2.price;
             product2.total=price2;    
-            this.setState(()=>{return{fashionProducts:tempcartfashionproducts,cart:[...this.state.cart],product2};},()=>{console.log(this.state)});
+            this.setState(()=>{return{fashionProducts:tempcartfashionproducts,cart:[...this.state.cart,product2]};},()=>{console.log(this.state)});
         }
         //Adding Electronic items to cart
         addElectronicToCart = id =>{
@@ -83,7 +86,7 @@ class ProductProvider extends Component {
             product3.count=1
             const price3 = product3.price;
             product3.total=price3;    
-            this.setState(()=>{return{electronicProducts:tempcartelectronicproducts,cart:[...this.state.cart],product3};},()=>{console.log(this.state)});
+            this.setState(()=>{return{electronicProducts:tempcartelectronicproducts,cart:[...this.state.cart,product3]};},()=>{console.log(this.state)});
         }
         //Adding fashion items to cart
         addStationaryToCart=id=>{
@@ -94,7 +97,7 @@ class ProductProvider extends Component {
             product4.count=1
             const price4 = product4.price;
             product4.total=price4;    
-            this.setState(()=>{return{stationaryProducts:tempcartstationaryproducts,cart:[...this.state.cart],product4};},()=>{console.log(this.state)});
+            this.setState(()=>{return{stationaryProducts:tempcartstationaryproducts,cart:[...this.state.cart,product4]};},()=>{console.log(this.state)});
         }
         //Adding clothes items to cart
         addClothesToCart=id=>{
@@ -105,7 +108,7 @@ class ProductProvider extends Component {
             product5.count=1
             const price5 = product5.price;
             product5.total=price5;    
-            this.setState(()=>{return{clothesProducts:tempcartclothesproduct,cart:[...this.state.cart],product5};},()=>{console.log(this.state)});
+            this.setState(()=>{return{clothesProducts:tempcartclothesproduct,cart:[...this.state.cart,product5]};},()=>{console.log(this.state)});
         }
 
 
@@ -242,6 +245,30 @@ class ProductProvider extends Component {
         }
         )}
     */
+   // Functions For Cart page
+
+   increment = id =>{
+       console.log("this is increment");
+
+   }
+   decrement = id =>{
+       console.log("this is decrement");
+   }
+   removeItem = id=>{
+       console.log("item removed");
+   }
+   clearCart=()=>{
+       console.log("Cart is clear");
+       this.setState(()=>{return{cart:[]}})
+   }
+   addTotals=()=>{
+       let subTotal = 0;
+       this.state.cart.map(item=>{subTotal+=item.total});
+       const tempTax = subTotal * 0.1;
+       const tax = parseFloat(tempTax.toFixed(2));
+       const total = subTotal + tax;
+       this.setState(()=>{return{cartSubTotal:subTotal,cartTax:tax,cartTotal:total}});
+    }
 
     render() {
         return (
@@ -262,6 +289,10 @@ class ProductProvider extends Component {
                 handleElectronicDetail:this.handleElectronicDetail,
                 handleStationaryDetail:this.handleStationaryDetail,
                 handleClothesDetail:this.handleClothesDetail,
+                increment:this.increment,
+                decrement:this.decrement,
+                removeItem:this.removeItem,
+                clearCart:this.clearCart
             }}>
                 {this.props.children}    {/* returning all the children (within this component) in our application */}
             </ProductContext.Provider>

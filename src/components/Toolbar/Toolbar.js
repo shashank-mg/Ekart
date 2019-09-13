@@ -14,6 +14,7 @@ const Toolbar = props => {
                 <ul>
                     <li><Link to="/" className="home">Home</Link></li>
                     <li><Link to="/" className="products">Products</Link></li>
+                    <li><Link to="/cart">Cart</Link></li>
                     <li><Link to="/signup" className="logSign" onClick={props.signLog}>Login/SignUp</Link></li>
                 </ul>
             </div>

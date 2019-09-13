@@ -10,7 +10,7 @@ import Details2 from './components/Details2';
 import Details3 from './components/Details3';
 import Details4 from './components/Details4';
 import Details5 from './components/Details5';
-import Cart from './components/Cart';
+import Cart from './components/Cart/Cart';
 import Default from './components/Default';
 import Account1 from './components/AccountSL/Account1';
 import Newnav from './components/Toolbar/Newnav';
