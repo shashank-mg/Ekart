@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {storeProducts,detailProduct,homeItems,fashionItems,electronicItems,stationaryItems,clotheItems,detailProduct1,detailProduct2,detailProduct3,detailProduct4,detailProduct5} from './Data';
+import {storeProducts,detailProduct,homeItems,fashionItems,electronicItems,stationaryItems,clotheItems,detailProduct1,detailProduct2,
+        detailProduct3,detailProduct4,detailProduct5} from './Data';
 
 const ProductContext = React.createContext(); 
 const ProductConsumer = ProductContext.Consumer; //Consumer
