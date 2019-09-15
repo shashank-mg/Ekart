@@ -35,7 +35,6 @@ export default function OrderPlaced({item,value}) {
                     )}
                     else{
                         return null;
-                    
                     }
 }
 
