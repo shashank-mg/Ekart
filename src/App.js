@@ -19,15 +19,21 @@ import FashionProductList from './components/AllProducts/FashionProductList';
 import ElectronicProductList from './components/AllProducts/ElectronicProductList';
 import StationaryProductList from './components/AllProducts/StationaryProductList';
 import ClothesProductList from './components/AllProducts/ClothesProductList';
+//import LoggedIn from './components/LoggedInAccount/LoggedIn';
+//import Modal from './components/Modal';
+//import SearchList from './components/SearchBar/SearchList';
+import OrderConfirmed from './components/Cart/OrderConfirmed';
 import {Switch,Route} from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import OrderPlaced from './components/Cart/OrderPlaced';
+//import LoginBox from './components/AccountSL/LoginBox';
 
 class App extends React.Component {
   state={
     sideDrawerOpen: false,
     signupLog: false,
-    originalNav:true
+    //originalNav:true
   };
 
   drawerToggleClickHandler=()=>{
@@ -42,7 +48,7 @@ class App extends React.Component {
 
   signUpLogOpener=()=>{
     this.setState({signupLog:true});
-    this.setState({originalNav:false});
+   // this.setState({originalNav:false});
   }
 
   render(){
@@ -58,10 +64,10 @@ class App extends React.Component {
       backDrop=<Backdrop backdropHandler={this.backdropClickHandler}/>;      
     }
 
-    if(this.state.signupLog){
-     // openup=<Account1/>
+    if(this.state.signupLog){    
       newNav=<Newnav/>
     }
+    
 
   return (
     <div>
@@ -71,7 +77,7 @@ class App extends React.Component {
       </div>
       <div style={{height:'100%'}}>
         <Toolbar drawerClickHandler={this.drawerToggleClickHandler} signLog={this.signUpLogOpener}/>
-        <SideDrawer shows={this.state.sideDrawerOpen} goBack={this.backdropClickHandler}/>
+        <SideDrawer shows={this.state.sideDrawerOpen} goBack={this.backdropClickHandler}/>      
         {/* To Add some animations these changes were made, in line 24 and 30, i.e adding 'shows' */}
         {backDrop}        
         <Switch>    { /* Specifies where the page has to go when the following path is typed */ }
@@ -87,10 +93,12 @@ class App extends React.Component {
           <Route path="/fashionitems" component={FashionProductList}/>
           <Route path="/electronicitems" component={ElectronicProductList}/>
           <Route path="/stationaryitems" component={StationaryProductList}/>
-          <Route path="/clothitems" component={ClothesProductList}/> 
+          <Route path="/clothitems" component={ClothesProductList}/>         
+          <Route path="/orderplaced" component={OrderConfirmed}/>            
           <Route exact path="/" component={ProductList}/>
           <Route component={Default}/>
-        </Switch>
+        </Switch>      
+        {/*<Modal />*/}
         <main style={{marginTop:'64px'}}>
           {/*<p>this is a para</p>*/}
         </main>

@@ -22,7 +22,9 @@ export default class RegisterBox extends React.Component{
       username:null,
       email:null,
       phonenum:null,
-      password:null,      
+      password:null, 
+      confirmMessage:"",
+      confirmMessages:"",     
       //loggedin:false,
       formErrors:{
         username:"",
@@ -86,6 +88,18 @@ export default class RegisterBox extends React.Component{
       this.setState({formErrors, [name]:value}, () => console.log(this.state));
     };
     
+    handleConfirmation=(e)=>{      
+      e.preventDefault();      
+      if(formValid(this.state)){       
+        this.setState({confirmMessage:"You have Successfully Created an Account!!"});
+        this.setState({confirmMessages:""})
+      }
+      else{
+        this.setState({confirmMessages:"Please create the Account with proper Credentials!!"}); 
+        this.setState({confirmMessage:""})
+      }
+    }
+
     
     render(){           
       const {formErrors} = this.state;
@@ -147,7 +161,9 @@ export default class RegisterBox extends React.Component{
               {formErrors.password.length>0 && (<span className='errorMessage'>{formErrors.password}</span>)}  
             </div>
             <br/>      
-            <button type="submit" className="login-btn">Sign up</button>
+            <button type="submit" className="login-btn" onClick={this.handleConfirmation}>Sign up</button>
+            <span className='confirmBox'>{this.state.confirmMessage}</span>
+            <span className='errorMessages'>{this.state.confirmMessages}</span>
             </form>         
           </div>                  
         </div>    

@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import {storeProducts,detailProduct,homeItems,fashionItems,electronicItems,stationaryItems,
-        clotheItems,detailProduct1,detailProduct2,detailProduct3,detailProduct4,detailProduct5} from './Data';
-
+import {storeProducts,detailProduct,homeItems,fashionItems,electronicItems,stationaryItems,clotheItems,detailProduct1,detailProduct2,detailProduct3,detailProduct4,detailProduct5} from './Data';
 
 const ProductContext = React.createContext(); 
-//Consumer
-const ProductConsumer = ProductContext.Consumer;
+const ProductConsumer = ProductContext.Consumer; //Consumer
 
 //Place the ProductContext.Provider on top of the entire application.i.e in index.js
 //Do the same thing as done in ProductList i.e getting data from the Data.js and put it in an array.
@@ -30,9 +27,11 @@ class ProductProvider extends Component {
         detailProduct4:detailProduct4,
         detailProduct5:detailProduct5,
         cart:[],
+        buyProduct:[],
         cartSubTotal:0,
         cartTax:0,
-        cartTotal:0
+        cartTotal:0,
+        confirmOrder:false
     }
     componentDidMount()
     {
@@ -52,7 +51,7 @@ class ProductProvider extends Component {
         product.count=1;
         const price = product.price;
         product.total=price;    
-        this.setState(()=>{return{products:tempcartproducts,cart:[...this.state.cart,product]};},()=>{this.addTotals()});
+        this.setState(()=>{return{products:tempcartproducts,cart:[...this.state.cart,product],buyProduct:[...this.state.cart,product]};},()=>{this.addTotals()});
     }
 
         // Adding Home itmes to cart
@@ -64,7 +63,7 @@ class ProductProvider extends Component {
             product1.count=1
             const price1 = product1.price;
             product1.total=price1;    
-            this.setState(()=>{return{homeProducts:tempcarthomeproducts,cart:[...this.state.cart,product1]};},()=>{console.log(this.state)});
+            this.setState(()=>{return{homeProducts:tempcarthomeproducts,cart:[...this.state.cart,product1],buyProduct:[...this.state.cart,product1]};},()=>{console.log(this.state)});
         }
         //adding fashion items to cart
         addFashionToCart = id =>{
@@ -75,7 +74,7 @@ class ProductProvider extends Component {
             product2.count=1
             const price2 = product2.price;
             product2.total=price2;    
-            this.setState(()=>{return{fashionProducts:tempcartfashionproducts,cart:[...this.state.cart,product2]};},()=>{console.log(this.state)});
+            this.setState(()=>{return{fashionProducts:tempcartfashionproducts,cart:[...this.state.cart,product2],buyProduct:[...this.state.cart,product2]};},()=>{console.log(this.state)});
         }
         //Adding Electronic items to cart
         addElectronicToCart = id =>{
@@ -86,7 +85,7 @@ class ProductProvider extends Component {
             product3.count=1
             const price3 = product3.price;
             product3.total=price3;    
-            this.setState(()=>{return{electronicProducts:tempcartelectronicproducts,cart:[...this.state.cart,product3]};},()=>{console.log(this.state)});
+            this.setState(()=>{return{electronicProducts:tempcartelectronicproducts,cart:[...this.state.cart,product3],buyProduct:[...this.state.cart,product3]};},()=>{console.log(this.state)});
         }
         //Adding fashion items to cart
         addStationaryToCart=id=>{
@@ -97,7 +96,7 @@ class ProductProvider extends Component {
             product4.count=1
             const price4 = product4.price;
             product4.total=price4;    
-            this.setState(()=>{return{stationaryProducts:tempcartstationaryproducts,cart:[...this.state.cart,product4]};},()=>{console.log(this.state)});
+            this.setState(()=>{return{stationaryProducts:tempcartstationaryproducts,cart:[...this.state.cart,product4],buyProduct:[...this.state.cart,product4]};},()=>{console.log(this.state)});
         }
         //Adding clothes items to cart
         addClothesToCart=id=>{
@@ -108,9 +107,8 @@ class ProductProvider extends Component {
             product5.count=1
             const price5 = product5.price;
             product5.total=price5;    
-            this.setState(()=>{return{clothesProducts:tempcartclothesproduct,cart:[...this.state.cart,product5]};},()=>{console.log(this.state)});
+            this.setState(()=>{return{clothesProducts:tempcartclothesproduct,cart:[...this.state.cart,product5],buyProduct:[...this.state.cart,product5]};},()=>{console.log(this.state)});
         }
-
 
     // FRONT PAGE
     setProducts=()=>{ // This is to solve the problem which was seen in tester.
@@ -249,29 +247,143 @@ class ProductProvider extends Component {
 
    increment = id =>{
        console.log("this is increment");
-
+       let tempCart=[...this.state.cart];
+       const selectedProduct=tempCart.find(item=>item.id === id);
+       const index = tempCart.indexOf(selectedProduct);
+       const product = tempCart[index];
+       product.count=product.count+1;
+       product.total=product.count*product.price;
+       this.setState(()=>{return{cart:[...tempCart]}},()=>{this.addTotals()})
    }
    decrement = id =>{
        console.log("this is decrement");
-   }
-   removeItem = id=>{
+       let tempCart=[...this.state.cart];
+       const selectedProduct=tempCart.find(item=>item.id === id);
+       const index = tempCart.indexOf(selectedProduct);
+       const product = tempCart[index];
+       product.count=product.count-1;
+       if(product.count===0){
+           this.removeItem(id)
+       }
+       else{
+        product.total=product.count*product.price;
+        this.setState(
+            ()=>{
+                return{cart:[...tempCart]};
+            },
+            ()=>{
+                this.addTotals();
+            }
+        )
+       }   
+   }   
+
+   /*removeItem = id=>{
        console.log("item removed");
-       let tempProducts=[...this.state.products];
+       let tempProducts = [...this.state.products];       
        let tempCart = [...this.state.cart];
-       tempCart = tempCart.filter(item=> item.id !== id); //removes all the item except the item that matches the given id.(returns the all the item to the cart that doesnt match this id)
-       const index = tempProducts.indexOf(this.getItem(id)); // gets the index of the product in the tempProducts array.
-       let removedProduct = tempProducts[index]; //gets the product that is to be removed
-       removedProduct.inCart=false;
-       removedProduct.count=0;
-       removedProduct.total=0;
+       tempCart = tempCart.filter(item=> item.id !== id); //returns all the item except the item that matches the given id.(returns the all the item to the cart that doesnt match this id)
+      // const index = tempProducts.indexOf(this.getItem(id)); // gets the index of the product in the tempProducts array.
+       //let removedProduct = tempProducts[index]; //gets the product that is to be removed
+       tempCart.inCart=false;
+       tempCart.count=0;
+       tempCart.total=0;
        this.setState(()=>{
            return{
                cart:[...tempCart],
-               product:[...tempProducts] // to set the values back to default
+               products:[...tempProducts] // to set the values back to default
            };
-        },()=>{this.addTotals();}
+        },()=>{this.addTotals();} //re-setting the value, to peform calculation for removed product.
        )
-    }
+    }*/
+
+    /*removeItem = id=>{
+        console.log("item removed");
+        let tempProducts = [...this.state.products];
+        let tempCart = [...this.state.cart];
+        tempCart = tempCart.filter(item=> item.id !== id); //returns all the item except the item that matches the given id.(returns the all the item to the cart that doesnt match this id)
+        const index = tempProducts.indexOf(this.getItem(id)); // gets the index of the product in the tempProducts array.
+        console.log(index);
+        let removedProduct = tempProducts[index]; //gets the product that is to be removed
+        console.log(removedProduct)
+        removedProduct.inCart=false;
+        removedProduct.count=0;
+        removedProduct.total=0;
+        this.setState(()=>{
+            return{
+                cart:[...tempCart],
+                products:[...tempProducts] // to set the values back to default
+            };
+         },()=>{this.addTotals();} //re-setting the value, to peform calculation for removed product.
+        )
+     }*/
+     removeItem = id=>{
+        console.log("item removed");
+       
+        let tempProducts = [...this.state.products];
+        let tempProducts1= [...this.state.homeProducts];
+        let tempProducts2= [...this.state.fashionProducts];
+        let tempProducts3= [...this.state.electronicProducts];
+        let tempProducts4= [...this.state.stationaryProducts];
+        let tempProducts5= [...this.state.clothesProducts];
+       
+        let tempCart = [...this.state.cart];
+        tempCart = tempCart.filter(item=> item.id !== id); //returns all the item except the item that matches the given id.(returns the all the item to the cart that doesnt match this id)
+        
+        const index = tempProducts.indexOf(this.getItem(id)); // gets the index of the product in the tempProducts array.
+        const index1 = tempProducts1.indexOf(this.getHomeItem(id)); // gets the index of the product in the tempProducts array.
+        const index2 = tempProducts2.indexOf(this.getFashionItem(id)); // gets the index of the product in the tempProducts array.
+        const index3 = tempProducts3.indexOf(this.getElectronicItem(id)); // gets the index of the product in the tempProducts array.
+        const index4 = tempProducts4.indexOf(this.getStationaryItem(id)); // gets the index of the product in the tempProducts array.
+        const index5 = tempProducts5.indexOf(this.getClothesItem(id)); // gets the index of the product in the tempProducts array.
+       
+        if(index===0 || index===1 || index===2 || index===3 || index===4 || index===5 || index===6 || index===7)       
+        {let removedProduct = tempProducts[index]; // gets the product that is to be removed        
+        removedProduct.inCart=false;
+        removedProduct.count=0;
+        removedProduct.total=0;}   
+        if(index1===0 || index1===1 || index1===2 || index1===3 || index1===4 || index1===5 || index1===6 || index1===7)
+        {let removedProduct1 = tempProducts1[index1]; //gets the product that is to be removed
+        console.log(index1)
+        removedProduct1.inCart=false;
+        removedProduct1.count=0;
+        removedProduct1.total=0;}  
+        if(index2===0 || index2===1 || index2===2 || index2===3 || index2===4 || index2===5 || index2===6 || index2===7)
+        {let removedProduct2 = tempProducts2[index2]; //gets the product that is to be removed
+        removedProduct2.inCart=false;
+        removedProduct2.count=0;
+        removedProduct2.total=0;}   
+        if(index3===0 || index3===1 || index3===2 || index3===3 || index3===4 || index3===5 || index3===6 || index3===7)
+        {let removedProduct3 = tempProducts3[index3]; //gets the product that is to be removed
+        removedProduct3.inCart=false;
+        removedProduct3.count=0;
+        removedProduct3.total=0;}
+        if(index4===0 || index4===1 || index4===2 || index4===3 || index4===4 || index4===5 || index4===6 || index1===7)
+        {let removedProduct4 = tempProducts4[index4]; //gets the product that is to be removed
+        removedProduct4.inCart=false;
+        removedProduct4.count=0;
+        removedProduct4.total=0;}
+        if(index5===0 || index5===1 || index5===2 || index5===3 || index5===4 || index5===5 || index5===6 || index5===7)
+        {let removedProduct5 = tempProducts5[index5]; //gets the product that is to be removed
+        removedProduct5.inCart=false;
+        removedProduct5.count=0;
+        removedProduct5.total=0;}
+        this.setState(()=>{
+            return{
+                cart:[...tempCart],
+                products:[...tempProducts], // to set the values back to default
+                products1:[...tempProducts1], // to set the values back to default
+                products2:[...tempProducts2], // to set the values back to default
+                products3:[...tempProducts3], // to set the values back to default
+                products4:[...tempProducts4], // to set the values back to default
+                products5:[...tempProducts5] // to set the values back to default
+            };
+         },()=>{this.addTotals();} //re-setting the value, to peform calculation for removed product.
+        )
+     }
+    
+     
+
    clearCart=()=>{
        console.log("Cart is clear");
        this.setState(()=>{return{cart:[]}},
@@ -289,7 +401,13 @@ class ProductProvider extends Component {
        const total = subTotal + tax;
        this.setState(()=>{return{cartSubTotal:subTotal,cartTax:tax,cartTotal:total}});
     }
+    placeOrder=()=>{
+        this.setState({confirmOrder:true})
+    }
 
+    closeTab=()=>{
+        this.setState({confirmOrder:false});
+    }
     render() {
         return (
            // Provider is returned 
@@ -301,9 +419,7 @@ class ProductProvider extends Component {
                 addFashionToCart:this.addFashionToCart,
                 addElectronicToCart:this.addElectronicToCart,
                 addStationaryToCart:this.addStationaryToCart,
-                addClothesToCart:this.addClothesToCart,
-                openModal:this.openModal,
-                closeModal:this.closeModal,
+                addClothesToCart:this.addClothesToCart,    
                 handleHomeDetail:this.handleHomeDetail,
                 handleFashionDetail:this.handleFashionDetail,
                 handleElectronicDetail:this.handleElectronicDetail,
@@ -311,7 +427,9 @@ class ProductProvider extends Component {
                 handleClothesDetail:this.handleClothesDetail,
                 increment:this.increment,
                 decrement:this.decrement,
-                removeItem:this.removeItem,
+                removeItem:this.removeItem, 
+                placeOrder:this.placeOrder,   
+                closeTab:this.closeTab,
                 clearCart:this.clearCart
             }}>
                 {this.props.children}    {/* returning all the children (within this component) in our application */}

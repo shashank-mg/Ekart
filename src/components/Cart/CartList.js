@@ -1,7 +1,7 @@
 import React from 'react';
 import CartItem from './CartItem';
 
-export default function CartList({values}) { //recieving props from Cart.js
+export default function CartList({values}) { //recieving props from CartItem.js, sending props to Cart.js
     const {cart}=values;
     console.log(values,cart)
     return (
