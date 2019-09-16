@@ -40,8 +40,7 @@ transform:translateX(0);     /* side-drawer slides in*/
     top:0;
     background-color:mediumslateblue;   
     text-align-last: center;
-    font-size: 22px;   
-    color:white;     
+    font-size: 22px;        
 }
 .list-group-item:hover{
     color:orange;
@@ -70,3 +69,4 @@ transform:translateX(0);     /* side-drawer slides in*/
     left:6px;    
     top:0px;    
 }
+

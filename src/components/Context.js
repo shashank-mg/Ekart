@@ -32,7 +32,8 @@ class ProductProvider extends Component {
         cartSubTotal:0,
         cartTax:0,
         cartTotal:0,
-        confirmOrder:false
+        confirmOrder:false,
+        logToolbar:false,
     }
     componentDidMount()
     {
@@ -384,10 +385,14 @@ class ProductProvider extends Component {
     placeOrder=()=>{
         this.setState({confirmOrder:true})
     }
-
     closeTab=()=>{
         this.setState({confirmOrder:false});
     }
+
+    logtoolbarOpener=()=>{
+        this.setState({logToolbar:true});
+      }
+
     render() {
         return (
            // Provider is returned 
@@ -410,7 +415,8 @@ class ProductProvider extends Component {
                 removeItem:this.removeItem, 
                 placeOrder:this.placeOrder,   
                 closeTab:this.closeTab,
-                clearCart:this.clearCart
+                clearCart:this.clearCart,
+                logtoolbarOpener:this.logtoolbarOpener
             }}>
                 {this.props.children}    {/* returning all the children (within this component) in our application */}
             </ProductContext.Provider>

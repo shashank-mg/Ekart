@@ -11,8 +11,7 @@ const Toolbar = props => {
             <div className="toolbar_logo"><a href="/">E-Kart</a></div>
             <div className="spacer"/>
             <div className="toolbar_navigation-items">
-                <ul>
-                    <li><Link to="/" className="home">Home</Link></li>
+                <ul>                
                     <li><Link to="/" className="products">Products</Link></li>
                     <li><Link to="/cart">Cart</Link></li>
                     <li><Link to="/signup" className="logSign" onClick={props.signLog}>Login/SignUp</Link></li>

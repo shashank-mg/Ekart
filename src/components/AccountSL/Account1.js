@@ -3,6 +3,7 @@ import RegisterBox from './RegisterBox';
 import LoginBox from './LoginBox';
 import {Link} from 'react-router-dom';
 import './Account1.css';
+import {ProductConsumer} from '../Context';
 
 export default class Account1 extends Component {
     
@@ -14,15 +15,18 @@ export default class Account1 extends Component {
         };
       }
 
-      showRegisterBox(){
+      showRegisterBox()
+      {
         this.setState({isRegisterOpen:true,isLoginOpen:false})
       }
 
-      showLoginBox(){
+      showLoginBox()
+      {
         this.setState({isRegisterOpen:false,isLoginOpen:true})
       }
 
-      render(){      
+      render()
+      {      
         return (
         <div style={{marginTop:'80px'}}>
         <div className="root-container">
@@ -35,11 +39,12 @@ export default class Account1 extends Component {
             </div>
           </div>
           <div className="box-container">
-            {this.state.isLoginOpen && <LoginBox/>}
+            {this.state.isLoginOpen && <LoginBox picks={this.props.picked}/>}
             {this.state.isRegisterOpen && <RegisterBox/>}
           </div>
           </div>
         </div>
         );
-    }
+      }
 }
+

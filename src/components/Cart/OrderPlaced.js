@@ -19,7 +19,7 @@ export default function OrderPlaced({item,value}) {
                                         <hr/>  
                                         <h2 style={{fontFamily:'Trebuchet MS'}}>Total Price: $ {cartTotal}</h2>
                                         <br/>
-                                        <Link to="/orderplaced">                    
+                                        <Link to="/orderconfirmed">                    
                                         <button className="btn btn-outline-primary" onClick={()=>closeTab()} >Place Order</button> 
                                         </Link>                    
                                         <br/> <br/>  

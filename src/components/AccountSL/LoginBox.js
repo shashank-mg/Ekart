@@ -1,27 +1,19 @@
 import React from 'react';
 import './loginstyle.scss';
 import './timerstyle.scss';
+import {Link} from 'react-router-dom';
+import { ProductConsumer } from '../Context';
 
-export default class LoginBox extends React.Component{
-  
-    constructor(props){
-      super(props)
-      this.state={ }; 
-    }
-
-    submitLogin(){
-  
-    }
-
-    render(){
-      return(
-        <div className="inner-container">
-        <div className="header">
-         Login
-        </div>
-          <div className="box">
-          <form onSubmit={this.handleChange} noValidate>
-            <div className="input-group">
+const LoginBox=props=> {      
+      return(  
+              
+          <div className="inner-container">
+          <div className="header">
+          Login
+          </div>
+           <div className="box">
+           <form>
+              <div className="input-group">
             
               <label htmlFor="username">Username</label>              
               <input type="text" 
@@ -40,11 +32,17 @@ export default class LoginBox extends React.Component{
                      placeholder="password"                        
               />
             </div>
-            <br/>
-            <button type="button" className="login-btn" onClick={this.submitLogin.bind(this)}>Login</button>
+            <br/> 
+            <Link to="/">     
+            <button type="button" className="login-btn" onClick={props.picks}>
+              Login        
+            </button>
+            </Link>
             </form>
           </div>      
         </div>
+        
       )
     }
-  }
+
+  export default LoginBox;

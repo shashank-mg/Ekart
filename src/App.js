@@ -19,6 +19,10 @@ import FashionProductList from './components/AllProducts/FashionProductList';
 import ElectronicProductList from './components/AllProducts/ElectronicProductList';
 import StationaryProductList from './components/AllProducts/StationaryProductList';
 import ClothesProductList from './components/AllProducts/ClothesProductList';
+import LogBackdrop from './components/LogBackdrop/LogBackdrop';
+import LogToolbar from './components/LogToolbar/LogToolbar';
+import LogSideDrawer from './components/LogSidedrawer/LogSideDrawer';
+import LoginBox from './components/AccountSL/LoginBox';
 //import LoggedIn from './components/LoggedInAccount/LoggedIn';
 //import Modal from './components/Modal';
 //import SearchList from './components/SearchBar/SearchList';
@@ -31,7 +35,9 @@ import OrderPlaced from './components/Cart/OrderPlaced';
 
 class App extends React.Component {
   state={
-    sideDrawerOpen: false,
+    sideDrawerOpen: false,  
+    logsideDrawerOpen: false, 
+    logToolbar:false,
     signupLog: false,
     //originalNav:true
   };
@@ -41,10 +47,27 @@ class App extends React.Component {
       return{sideDrawerOpen:!prevState.sideDrawerOpen};
     });
   };
+  logdrawerToggleClickHandler=()=>{
+    this.setState((prevState)=>{
+      return{logsideDrawerOpen:!prevState.logsideDrawerOpen};
+    });
+  };
 
   backdropClickHandler=()=>{
     this.setState({sideDrawerOpen:false});
   };
+
+  logbackdropClickHandler=()=>{
+    this.setState({logsideDrawerOpen:false});
+  };
+
+  logtoolbarOpener=()=>{
+    this.setState({logToolbar:true});
+  }
+  logToolbarCloser=()=>{
+    this.setState({logToolbar:false});
+  }
+  
 
   signUpLogOpener=()=>{
     this.setState({signupLog:true});
@@ -55,8 +78,10 @@ class App extends React.Component {
     //let sideDrawer;
     //let openup;
     let backDrop;
+    let logbackDrop;
     let newNav;
-    
+    let logTool;
+    let normTool;
 
     if(this.state.sideDrawerOpen)
     {       
@@ -64,8 +89,22 @@ class App extends React.Component {
       backDrop=<Backdrop backdropHandler={this.backdropClickHandler}/>;      
     }
 
+    if(this.state.logsideDrawerOpen)
+    {       
+      {/* sideDrawer=<SideDrawer/> //since, the sideDrawerOpen is false initially,the SideDrawer wont be displayed,i.e <SideDrawer /> component will not be displayed.*/}
+      logbackDrop=<LogBackdrop logbackdropHandler={this.logbackdropClickHandler} />;      
+    }
+
     if(this.state.signupLog){    
       newNav=<Newnav/>
+    }
+    
+    if(this.state.logToolbar && this.state.signupLog){
+      logTool=<LogToolbar logdrawerClickHandler={this.logdrawerToggleClickHandler} getback={this.logToolbarCloser} />
+    }
+
+    if(!this.state.logToolbar && !this.state.signupLog){
+      normTool= <Toolbar drawerClickHandler={this.drawerToggleClickHandler} signLog={this.signUpLogOpener}/>    
     }
     
 
@@ -75,11 +114,20 @@ class App extends React.Component {
         {newNav}
         {/*{openup}*/}
       </div>
+      <div className="logTools">
+      {logTool} 
+      </div>
       <div style={{height:'100%'}}>
-        <Toolbar drawerClickHandler={this.drawerToggleClickHandler} signLog={this.signUpLogOpener}/>
-        <SideDrawer shows={this.state.sideDrawerOpen} goBack={this.backdropClickHandler}/>      
+        {/*<Toolbar drawerClickHandler={this.drawerToggleClickHandler} signLog={this.signUpLogOpener}/>*/} 
+        {normTool}       
+        <SideDrawer shows={this.state.sideDrawerOpen} goBack={this.backdropClickHandler}/>     
+        <LogSideDrawer logshows={this.state.logsideDrawerOpen} loggoBack={this.logbackdropClickHandler}/> 
+        
+        {/*<LogToolbar logdrawerClickHandler={this.logdrawerToggleClickHandler} />*/}
         {/* To Add some animations these changes were made, in line 24 and 30, i.e adding 'shows' */}
-        {backDrop}        
+        {backDrop}
+        {logbackDrop}  
+           
         <Switch>    { /* Specifies where the page has to go when the following path is typed */ }
           <Route path="/details" component={Details}/>
           <Route path="/details1" component={Details1}/>
@@ -88,16 +136,17 @@ class App extends React.Component {
           <Route path="/details4" component={Details4}/>
           <Route path="/details5" component={Details5}/>
           <Route path="/cart" component={Cart}/>
-          <Route path="/signup" component={Account1}/>
+          <Route path="/signup" render={() => ( <Account1 picked={this.logtoolbarOpener} />)} />
           <Route path="/homeitems" component={HomeProductList}/>
           <Route path="/fashionitems" component={FashionProductList}/>
           <Route path="/electronicitems" component={ElectronicProductList}/>
           <Route path="/stationaryitems" component={StationaryProductList}/>
           <Route path="/clothitems" component={ClothesProductList}/>         
-          <Route path="/orderplaced" component={OrderConfirmed}/>            
+          <Route path="/orderconfirmed" component={OrderConfirmed}/>            
           <Route exact path="/" component={ProductList}/>
           <Route component={Default}/>
-        </Switch>      
+        </Switch>  
+        {/*<Account1 picked={this.logtoolbarOpener}/>*/}     
         {/*<Modal />*/}
         <main style={{marginTop:'64px'}}>
           {/*<p>this is a para</p>*/}
@@ -122,3 +171,4 @@ export default App;
   path="/" with the contents of the page which is in the function controlled by events and along with that of the
   path="/" page 
 */
+
