@@ -160,7 +160,18 @@ export default class RegisterBox extends React.Component{
               />
               {formErrors.password.length>0 && (<span className='errorMessage'>{formErrors.password}</span>)}  
             </div>
-            <br/>      
+            <br/>  
+            <div className="input-group">
+              <label htmlFor="address">Address</label>              
+              <input type="text" 
+                     name="address" 
+                     className="login-input" 
+                     placeholder="address"
+                     noValidate
+                     onChange={this.handleChange}
+              />
+              </div>
+              <br/>    
             <button type="submit" className="login-btn" onClick={this.handleConfirmation}>Sign up</button>
             <span className='confirmBox'>{this.state.confirmMessage}</span>
             <span className='errorMessages'>{this.state.confirmMessages}</span>
